@@ -1,5 +1,7 @@
 import requests
-from bs4 import BeautifulStoneSoup
+import os
+import sqlite3
+from bs4 import BeautifulSoup
 
 __all__ = ["Scraping"]
 
@@ -14,7 +16,7 @@ class Scraping:
         self.port = port 
 
         self.reponse = requests.get(self.url)
-        self.soup = BeautifulStoneSoup(self.reponse.text, "lxml")
+        self.soup = BeautifulSoup(self.reponse.text, "lxml")
 
     def __is_ok(self) -> bool:
         return self.reponse.ok
@@ -59,5 +61,25 @@ class Scraping:
         pass
 
 if __name__ == "__main__":
+    database = "../database.db"
+
+    #Secteurs
     PROTOCOL = "HTTP"
-    URL = "https://www.onisep.fr"
+    URL = "https://www.cidj.com/metiers/metiers-par-secteur"
+    secteurs = []
+    reponse =  requests.get(URL)
+    if reponse.ok:
+        soup = BeautifulSoup(reponse.text, "lxml")
+        uls = soup.find_all("h2")
+        for ul in uls:
+            secteur = ul.text
+            secteurs.append(secteur)
+    with sqlite3.connect(database) as db:
+        cursor = db.cursor()
+        for i in range(len(secteurs)):
+            requete = "insert into Secteurs (Nom) values (?)"
+            cursor.execute(requete, [(secteurs[i])])
+        db.commit()
+
+
+    #User_Type
