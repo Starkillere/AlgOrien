@@ -1,4 +1,5 @@
 import requests
+import time
 import os
 import sqlite3
 from bs4 import BeautifulSoup
@@ -62,9 +63,10 @@ class Scraping:
 
 if __name__ == "__main__":
     database = "../database.db"
+    PROTOCOL = "HTTP"
 
     #Secteurs
-    PROTOCOL = "HTTP"
+    """
     URL = "https://www.cidj.com/metiers/metiers-par-secteur"
     secteurs = []
     reponse =  requests.get(URL)
@@ -80,6 +82,28 @@ if __name__ == "__main__":
             requete = "insert into Secteurs (Nom) values (?)"
             cursor.execute(requete, [(secteurs[i])])
         db.commit()
+    """
 
+    #Métiers
+    with sqlite3.connect(database) as db:
+        cursor = db.cursor()
+        requete = "select * from Secteurs"
+        cursor.execute(requete)
+        secteurs = cursor.fetchall()
 
-    #User_Type
+    
+    for i in range(len(secteurs)):
+        URL = "https://www.cidj.com/metiers/metiers-par-secteur/"+secteurs[i][1].lower().replace(" ", "")
+        print("****",URL,"****")
+        metiers = []
+        reponse =  requests.get(URL)
+        if reponse.ok:
+            soup = BeautifulSoup(reponse.text, "lxml")
+            h2s = soup.find_all("h2")
+            for h2 in h2s:
+                metier = h2.find('a')
+                metier = metier.text
+                metiers.append(metier)
+                print(metier)
+        time.sleep(1)
+        
