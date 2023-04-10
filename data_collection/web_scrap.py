@@ -101,7 +101,6 @@ if __name__ == "__main__":
         cursor.execute(requete)
         secteurs = cursor.fetchall()
 
-    count = 0
     metiers = []
     for i in range(len(secteurs)):
         URL = "https://www.cidj.com/metiers/metiers-par-secteur/"+url_correcteur(secteurs[i][1])
