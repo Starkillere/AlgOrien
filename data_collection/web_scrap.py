@@ -113,7 +113,6 @@ if __name__ == "__main__":
             nb_pages = len(soup.find_all("li",attrs="pager__item"))-2
         
         if nb_pages > 0:
-            count += 1
             for j in range(nb_pages):
                 url = URL+"?page="+str(j)
                 reponse =  requests.get(url)
@@ -128,7 +127,6 @@ if __name__ == "__main__":
             url = URL
             reponse =  requests.get(url)
             if reponse.ok:
-                count += 1
                 soup = BeautifulSoup(reponse.text, "lxml")
                 h2s = soup.find_all("h2")
                 for h2 in h2s:
