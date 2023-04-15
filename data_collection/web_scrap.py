@@ -131,7 +131,7 @@ if __name__ == "__main__":
                 h2s = soup.find_all("h2")
                 for h2 in h2s:
                     metier = h2.find('a')
-                    metier = metier.text
+                    metier = metier.textdb
                     metiers.append([metier,index])
     with sqlite3.connect(database) as db:
         cursor = db.cursor()
