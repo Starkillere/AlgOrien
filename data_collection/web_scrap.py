@@ -8,26 +8,26 @@ from bs4 import BeautifulSoup
 __all__ = ["Scraping"]
 
 PROTOCOL = "HTTP"
-URL = "https://www.onisep.fr"
+URL1 = "https://www.onisep.fr"
 
-def url_correcteur(url:str) -> str:
-    url = url.lower()
-    url = url.replace("–", "-")
-    url = url.replace(" ", "-")
-    url = url.replace("---", "-")
-    url = url.replace("’","-")
-    url = unidecode.unidecode(url)
-    return url
+def url1_correcteur(url1:str) -> str:
+    url1 = url1.lower()
+    url1 = url1.replace("–", "-")
+    url1 = url1.replace(" ", "-")
+    url1 = url1.replace("---", "-")
+    url1 = url1.replace("’","-")
+    url1 = unidecode.unidecode(url1)
+    return url1
 
 
 class Scraping:
-    def __init__(self, url:str, protocol:str, port=None) -> None:
+    def __init__(self, url1:str, protocol:str, port=None) -> None:
 
-        self.url = url
+        self.url1 = url1
         self.protocol =  protocol
         self.port = port 
 
-        self.reponse = requests.get(self.url)
+        self.reponse = requests.get(self.url1)
         self.soup = BeautifulSoup(self.reponse.text, "lxml")
 
     def __is_ok(self) -> bool:
@@ -44,7 +44,7 @@ class Scraping:
             with open(file_name, "w", encoding="utf-8") as file:
                 file.write(html_code)
 
-            print(f"[*] Le code HTML de {self.url} a été copyé dans {file_name}............")
+            print(f"[*] Le code HTML de {self.url1} a été copyé dans {file_name}............")
 
             return True
         return False
@@ -69,7 +69,7 @@ class Scraping:
     def sublimeTextElmt(self):
         pass
 
-    def find_all_url(self):
+    def find_all_url1(self):
         pass
 
 if __name__ == "__main__":
@@ -77,9 +77,9 @@ if __name__ == "__main__":
     PROTOCOL = "HTTP"
 
     #Secteurs
-    URL = "https://www.cidj.com/metiers/metiers-par-secteur"
+    URL1 = "https://www.cidj.com/metiers/metiers-par-secteur"
     secteurs = []
-    reponse =  requests.get(URL)
+    reponse =  requests.get(URL1)
     if reponse.ok:
         soup = BeautifulSoup(reponse.text, "lxml")
         uls = soup.find_all("h2")
@@ -103,9 +103,9 @@ if __name__ == "__main__":
 
     metiers = []
     for i in range(len(secteurs)):
-        URL = "https://www.cidj.com/metiers/metiers-par-secteur/"+url_correcteur(secteurs[i][1])
+        URL1 = "https://www.cidj.com/metiers/metiers-par-secteur/"+url1_correcteur(secteurs[i][1])
         index = secteurs[i][0]
-        reponse =  requests.get(URL)
+        reponse =  requests.get(URL1)
 
         if reponse.ok:
 
@@ -114,8 +114,8 @@ if __name__ == "__main__":
         
         if nb_pages > 0:
             for j in range(nb_pages):
-                url = URL+"?page="+str(j)
-                reponse =  requests.get(url)
+                url1 = URL1+"?page="+str(j)
+                reponse =  requests.get(url1)
                 if reponse.ok:
                     soup = BeautifulSoup(reponse.text, "lxml")
                     h2s = soup.find_all("h2")
@@ -124,14 +124,14 @@ if __name__ == "__main__":
                         metier = metier.text
                         metiers.append([metier,index])
         else:
-            url = URL
-            reponse =  requests.get(url)
+            url1 = URL1
+            reponse =  requests.get(url1)
             if reponse.ok:
                 soup = BeautifulSoup(reponse.text, "lxml")
                 h2s = soup.find_all("h2")
                 for h2 in h2s:
                     metier = h2.find('a')
-                    metier = metier.textdb
+                    metier = metier.text
                     metiers.append([metier,index])
     with sqlite3.connect(database) as db:
         cursor = db.cursor()
@@ -139,3 +139,79 @@ if __name__ == "__main__":
             requete = "insert into Métiers (Nom, ID_formation) values (?, ?)"
             cursor.execute(requete, [(metiers[i][0]), (metiers[i][1])])
         db.commit()
+  
+    #Description Métier
+    URL1 = "https://www.cidj.com"
+    url2 = "https://www.cidj.com/metiers/metiers-par-secteur"
+
+    continue_Bool = False
+    response = requests.get(url2)
+    secteur_métier_link = []
+    metiers_links = {}
+    descriptions = {}
+
+    if response.ok:
+        soup = BeautifulSoup(response.text, "lxml")
+        class_Cat = soup.find_all("div", attrs="cat")
+        for cat in class_Cat:
+            link =  URL1+cat.find("a")["href"]
+            secteur_métier_link.append(link)
+        continue_Bool = True
+
+    if continue_Bool:
+        for link in secteur_métier_link:
+            response = requests.get(link)
+            if response.ok:
+                soup = BeautifulSoup(response.text, "lxml")
+                nb_pages = len(soup.find_all("li",attrs="pager__item"))-2
+
+                if nb_pages > 0:
+                    for j in range(nb_pages):
+                        url1 = link+"?page="+str(j)
+                        reponse =  requests.get(url1)
+                        if reponse.ok:
+                            soup = BeautifulSoup(reponse.text, "lxml")
+                            div_btn = soup.find_all("h2")
+                            for metier_link in div_btn:
+                                lien = "https://www.cidj.com"+metier_link.find("a")["href"]
+                                text = metier_link.find("a").text
+                                metiers_links[text] = lien
+                else:
+                    div_btn = soup.find_all("h2")
+                    for metier_link in div_btn:
+                        lien = "https://www.cidj.com"+metier_link.find("a")["href"]
+                        text = metier_link.find("a").text
+                        metiers_links[text] = lien
+            else:
+                continue_Bool = False
+    
+    if continue_Bool:
+        for title,link in metiers_links.items():
+            response = requests.get(link)
+            if response.ok:
+                soup = BeautifulSoup(response.text, "lxml")
+                description = soup.find("div", attrs="body-wrapper-content")
+                descriptions[title] = description.text
+            else:
+                continue_Bool = False
+
+    if continue_Bool:
+        with sqlite3.connect(database) as conn:
+            cursor = conn.cursor()
+            request = "select * from Metiers"
+            cursor.execute(request)
+            metiers = cursor.fetchall()
+
+            noms =  [nom[1] for nom in metiers]
+            index = 1
+
+            for title,description in descriptions.items():
+                if title != 'Chef / Cheffe de projet CRM':
+                    request = "UPDATE Metiers SET ID_Description = ? WHERE Nom = ?"
+                    cursor.execute(request, [(index), (title)])
+                    ID = metiers[noms.index(title)][0]
+
+                    request = "insert into Descriptions (Description, ID_Metier) values (?, ?)"
+                    cursor.execute(request, [(description), (ID)])
+                    index += 1
+            conn.commit()
