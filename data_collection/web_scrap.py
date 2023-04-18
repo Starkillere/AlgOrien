@@ -1,5 +1,7 @@
 import requests
 import unidecode
+import random
+import data
 import time
 import os
 import sqlite3
@@ -215,3 +217,67 @@ if __name__ == "__main__":
                     cursor.execute(request, [(description), (ID)])
                     index += 1
             conn.commit()
+
+    #simulation de données
+    formatage = {"a":0, "b":1, "c":2, "d":3}
+    
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        request = "select * from Categories_metiers"
+        cursor.execute(request)
+        ret = cursor.fetchall()
+
+        categories = [ret[i][1] for i in range(len(ret))]
+
+        send_packet = {}
+        for i in range(len(categories)):
+            send_packet[categories[i]] = []
+            for j in range(4):
+                question_rep = []
+                for key,value in data.question_catégories.items():
+                    question_rep.append(random.choice(list(formatage.values())))
+                send_packet[categories[i]].append(question_rep)
+        
+        for key,value in send_packet.items():
+            ID = ret[categories.index(key)][0]
+            for donp in value:
+                gloglo = []
+                for repoj in donp:
+                    gloglo.append((repoj))
+                gloglo = [(ID)]+gloglo
+
+                request = "insert into Profils_types_categories (ID_Categories_metiers,Field3,Field4,Field5,Field6,Field7,Field8,Field9,Field10,Field11,Field12) values (?,?,?,?,?,?,?,?,?,?,?)"
+                cursor.execute(request, gloglo)
+        
+        conn.commit()
+
+        cursor = conn.cursor()
+        request = "select * from Metiers"
+        cursor.execute(request)
+        ret = cursor.fetchall()
+
+        categories = [ret[i][1] for i in range(len(ret))]
+
+        send_packet = {}
+        for i in range(len(categories)):
+            send_packet[categories[i]] = []
+            for j in range(4):
+                question_rep = []
+                for key,value in data.question_metier.items():
+                    question_rep.append(random.choice(list(formatage.values())))
+                send_packet[categories[i]].append(question_rep)
+
+        for key,value in send_packet.items():
+            ID = ret[categories.index(key)][0]
+            for donp in value:
+                gloglo = []
+                for repoj in donp:
+                    gloglo.append((repoj))
+                gloglo = [(ID)]+gloglo
+
+                request = "insert into Profils_types_metiers (ID_Metier,Field3,Field4,Field5,Field6,Field7,Field8,Field9,Field10,Field11,Field12,Field13,Field14,Field15,Field16,Field17,Field18,Field19,Field20,Field21,Field22) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                cursor.execute(request, gloglo)
+        
+        conn.commit()
+
+        PIE = "https://www.data.gouv.fr/fr/"
