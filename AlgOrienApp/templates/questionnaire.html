@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block navlinks %}
+<div class="questionnaire">
+    <div class="form">
+        <form action="/questionnaire" class="form" method=post>
+            {% for question,reponses in question_categorie.items() %}
+                <h2>question</h>
+                    {% for reponse in reponses %}
+                        <input type="checkbox" id="" name="vehicle1" value="Bike">
+                        <label for="vehicle1"> I have a bike</label><br>
+                    {% endfor %}
+            {% endfor %}
+            <input type="submit" value="Envoyer">
+        </form>
+    </div>
+</div>
+{% endblock %}

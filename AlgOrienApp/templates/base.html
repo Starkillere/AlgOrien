@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr-fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/accueil.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/questionnaire.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/resulta.css">
+        <link rel="icon" href="/static/images/favicon.ico">
+        <title>AlgOrien</title>
+    </head>
+    <body>
+        <nav class="navbar">
+            <a href="/" class="logo"><img src="" alt="logo"></a>
+            <div class="nav-links">
+                <ul>
+                    <li class="active" ><a href="/" >Menu</a></li>
+                    <li class="active" ><a href="/https://github.com/Starkillere/AlgOrien">À propos</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page">
+            {% block navlinks %}{% endblock %}
+        </div>
+        <div class="footer ">
+            <footer>
+              <div class="colum">
+                <div class="line"><a href="/Documentation">Documentation</a></div>
+                <div class="line"><a href="https://github.com/Starkillere/AlgOrien">Dépôt Github</div>
+              </div>
+              <div class="colum">
+                <div class="line"><a href="#">© <script>document.write(new Date().getFullYear());</script>par Club-info-math</h2></a></div>
+              </div>
+            </footer>
+        </div>
+    </body>
+</html>

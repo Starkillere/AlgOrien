@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from . import KnnOrien
+from flask import Flask, render_template, request, redirect, url_for
+from . import KnnOrien, data
 from datetime import timedelta
 import os
 
@@ -20,4 +20,4 @@ def questionnaire():
     if request.method == "POST":
         return render_template("resulta.html")
     else:
-        return render_template("questionnaire.html")
+        return render_template("questionnaire.html", question_categorie=data.question_catégories, question_metier=data.question_metier)
