@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
 {% block navlinks %}
 <div class="accueil">
-    <h1>Bienvenue sur AlgOrien !</br>
-        <span>Pour ......</span></h1><br>
+    <h1>Bienvenue <span class="auto-typing">sur AlgOrien !</span></h1></br>
+        <p>Avec AlgOrien, faites le bon choix d'orientation !<br>Conçu par le club info math du lycée de sada<br>AlgOrien vous aider à trouver une voie professionnelle.</p><br>
     <div class="navigation">
-        <a href="/questionnaire"><button type="button">Trouver mon orientation</button></a>
+        <a href="https://github.com/Starkillere" target="_blank">Autres projets</a>
+        <a href="/questionnaire" class="gold">Trouver mon orientation</a>
     </div>
 </div>
+<script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+<script>
+    let typed = new Typed('.auto-typing', {
+        strings: ['trouvez la voie!', "il n'est jamais trop tard", "<< Telle est la Voie ! >>"],
+        typeSpeed: 100,
+        backSpeed: 100,
+        loop: true,
+        fadeOut: true,
+        fadeOutClass: 'type-fade-out',
+        fadeOutDelay: 500,
+        shuffle: true
+    }
+    )
+</script>
 {% endblock %}

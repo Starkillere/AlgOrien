@@ -12,28 +12,32 @@
         <title>AlgOrien</title>
     </head>
     <body>
-        <nav class="navbar">
-            <a href="/" class="logo"><img src="" alt="logo"></a>
-            <div class="nav-links">
-                <ul>
-                    <li class="active" ><a href="/" >Menu</a></li>
-                    <li class="active" ><a href="/https://github.com/Starkillere/AlgOrien">À propos</a></li>
-                </ul>
-            </div>
-        </nav>
+        <header>
+            <nav class="navbar">
+                <a href="/" ><img src="/static/images/logo.png" alt="logo" class="logo"></a>
+                    <ul>
+                        <li class="active" ><a href="/" >Menu</a></li>
+                        <li class="active" ><a href="https://github.com/Starkillere/AlgOrien" target="_blank">À propos</a></li>
+                    </ul>
+                    <img src="/static/images/hambuger-button.png" alt="" class="humber">
+            </nav>
+        </header>
         <div class="page">
             {% block navlinks %}{% endblock %}
         </div>
         <div class="footer ">
             <footer>
               <div class="colum">
-                <div class="line"><a href="/Documentation">Documentation</a></div>
-                <div class="line"><a href="https://github.com/Starkillere/AlgOrien">Dépôt Github</div>
+                <div class="line"><a href="https://github.com/Starkillere/AlgOrien" target="_blank">Documentation</a></div>
+                <div class="line"><a href="https://github.com/Starkillere/AlgOrien" target="_blank">Dépôt Github</div>
               </div>
               <div class="colum">
-                <div class="line"><a href="#">© <script>document.write(new Date().getFullYear());</script>par Club-info-math</h2></a></div>
+                <div class="line"><a href="#">© <script>document.write(new Date().getFullYear());</script> par Club-info-math LPO SADA</h2></a></div>
               </div>
             </footer>
+        </div>
+        <div class="backgroond">
+
         </div>
     </body>
 </html>
