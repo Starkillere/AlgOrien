@@ -78,6 +78,7 @@ if __name__ == "__main__":
     database = "../database.db"
     PROTOCOL = "HTTP"
 
+
     #Secteurs
     URL1 = "https://www.cidj.com/metiers/metiers-par-secteur"
     secteurs = []
@@ -281,3 +282,30 @@ if __name__ == "__main__":
         conn.commit()
 
         PIE = "https://www.data.gouv.fr/fr/"
+
+    categories = {}
+    count = 0
+    for key,value in data.question_catégories.items():
+        new_key = (f"Q#{count}", key)
+        categories[new_key] = []
+        slice_in = 0
+        for reponse in value:
+            form_repo = [f"R#{slice_in} Q#{count}", reponse]
+            categories[new_key].append(form_repo)
+            slice_in += 1
+        count += 1
+    
+    metier = {}
+    for key,value in data.question_metier.items():
+        new_key = (f"Q#{count}", key)
+        metier[new_key] = []
+        slice_in = 0
+        for reponse in value:
+            form_repo = [f"R#{slice_in} Q#{count}", reponse]
+            metier[new_key].append(form_repo)
+            slice_in += 1
+        count += 1
+
+    print(categories)
+    print("\n\n")
+    print(metier)
