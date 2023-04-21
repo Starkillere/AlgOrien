@@ -1,0 +1,48 @@
+.questionnaire .form
+{   margin: 0 auto;
+    width: 50%;
+    height: 45%;
+    background-color: #ccc;
+    border-radius: 3px;
+    padding: 30px;
+}
+
+
+.questionnaire .content h2
+{
+    text-align: center;
+    color: #0e2527;
+    font-family: 'Trebuchet MS', sans-serif;
+    
+}
+
+.questionnaire .show {
+    display: none;
+}
+
+.questionnaire .but, .buto
+{
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.25rem;
+    border: 1px solid #121211;
+    padding: 10px 20px;
+    margin-right: 30px;
+    color: #121212;
+    background-color: #2eb0f0;
+    font-weight: 600;
+    margin-left: 40%;
+    margin-right: 50%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.questionnaire .buto 
+{
+    display: none;
+}
+
+.questionnaire .active
+{
+    display: block;
+}

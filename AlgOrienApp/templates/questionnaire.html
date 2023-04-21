@@ -2,23 +2,31 @@
 {% block navlinks %}
 <div class="questionnaire">
     <div class="form">
-        <form action="/questionnaire" class="form" method=post>
-            {% for question,reponses in question_categorie.items() %}
-                <br><h2>{{question[1]}}</h><br>
-                    {% for reponse in reponses %}
-                        <br><input type="radio" id="reponse {{reponse[0]}}" name="categ" value="{{reponse[0]}}">
-                        <label for="reponse {{reponse[0]}}">{{reponse[1]}}</label><br>
-                    {% endfor %}
-            {% endfor %}
-            {% for question,reponses in question_metier.items() %}
-                <br><h2>{{question[1]}}</h><br>
-                    {% for reponse in reponses %}
-                        <br><input type="radio" id="reponse {{reponse[0]}}" name="categ" value="{{reponse[0]}}">
-                        <label for="reponse {{reponse[0]}}">{{reponse[1]}}</label><br>
-                    {% endfor %}
-            {% endfor %}
-            <input type="submit" value="Envoyer">
+        <form action="/questionnaire" method=post>
+            <div class="content">
+                {% for question,reponses in question_categorie.items() %}
+                    <div class="show">
+                        <br><h2>{{question[1]}}</h2><br>
+                            {% for reponse in reponses %}
+                                <br><input type="radio" id="{{reponse[0]}}" name="{{question[0]}}" value="{{reponse[0]}}">
+                                <label for="{{reponse[0]}}">{{reponse[1]}}</label><br>
+                            {% endfor %}
+                    </div>
+                {% endfor %}
+                {% for question,reponses in question_metier.items() %}
+                    <div class="show">
+                        <br><h2>{{question[1]}}</h2><br>
+                            {% for reponse in reponses %}
+                                <br><input type="radio" id="{{reponse[0]}}" name="{{question[0]}}" value="{{reponse[0]}}">
+                                <label for="{{reponse[0]}}">{{reponse[1]}}</label><br>
+                            {% endfor %}
+                    </div>        
+                {% endfor %}
+                <br><input id="but" class="but" type="button" value="Suivant"><br>
+                <br><input id="buto" class="buto" type="submit" value="Envoyer"><br>
+            </div>
         </form>
     </div>
 </div>
+<script src="/static/js/slide.js"></script>
 {% endblock %}

@@ -5,11 +5,15 @@ import sqlite3
 
 __all__ = ["Algo_knn_orien"]
 
-def Import_and_format_data(database:str, table:str) -> dict:
+def Import_and_format_data(database:str, table:str, arg:int) -> dict:
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
-        request =  "select * from ?"
-        cursor.execute(request, [(table)])
+        if arg == None:
+            request =  "select * from ?"
+            cursor.execute(request, [(table)])
+        else:
+            request =  "select * from ? WHERE ? = ?"
+            cursor.execute(request, [(table), (arg[0]), (arg[1])])
         data =  cursor.fetchall()
 
     keys, values = [(data[i][0], data[i][1]) for i in range(len(data))], [(data[i][j] for j in range(len(data[0]))) for i in range(len(data))]
@@ -40,13 +44,13 @@ def Frequence(nn:list) -> tuple:
     
     return ID
 
-def Algo_knn_orien(k:int, user_data:list[int], database:str, table:str) -> tuple:
-    assert type(k) == int
+def Algo_knn_orien(user_data:list[int], database:str, table:str, arg=None) -> tuple:
     assert type(user_data) == list
     assert type(database) == str
     assert type(table) == str
 
     data =  Import_and_format_data(database, table)
+    k = len(list(data.values()))
     keys, values = list(data.keys()), list(data.values())
 
     nnp = []
