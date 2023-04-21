@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
-
 import sqlite3
-import KnnOrien
+from . import KnnOrien
 
 __all__ = ["formatage", "find_orientation", "question_catégories", "question_metier"]
 
