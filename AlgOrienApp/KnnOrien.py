@@ -5,18 +5,18 @@ import sqlite3
 
 __all__ = ["Algo_knn_orien"]
 
-def Import_and_format_data(database:str, table:str, arg:int) -> dict:
+def Import_and_format_data(database:str, table:str, arg:list, nb:int) -> dict:
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
         if arg == None:
-            request =  "select * from ?"
-            cursor.execute(request, [(table)])
+            request =  f"select * from {table}"
+            cursor.execute(request)
         else:
-            request =  "select * from ? WHERE ? = ?"
-            cursor.execute(request, [(table), (arg[0]), (arg[1])])
+            request =  f"select * from {table} WHERE {arg[0]} = ?"
+            cursor.execute(request, [(arg[1])])
         data =  cursor.fetchall()
 
-    keys, values = [(data[i][0], data[i][1]) for i in range(len(data))], [(data[i][j] for j in range(len(data[0]))) for i in range(len(data))]
+    keys, values = [(data[i][0], data[i][1]) for i in range(len(data))], [[data[i][j] for j in range(2,nb)] for i in range(len(data))]
     dict_data = {k:v for (k,v) in zip(keys, values)}
 
     return dict_data
@@ -44,12 +44,12 @@ def Frequence(nn:list) -> tuple:
     
     return ID
 
-def Algo_knn_orien(user_data:list[int], database:str, table:str, arg=None) -> tuple:
+def Algo_knn_orien(user_data:list[int], database:str, table:str, nb:int, arg=None) -> tuple:
     assert type(user_data) == list
     assert type(database) == str
     assert type(table) == str
 
-    data =  Import_and_format_data(database, table)
+    data =  Import_and_format_data(database, table, arg, nb)
     k = len(list(data.values()))
     keys, values = list(data.keys()), list(data.values())
 

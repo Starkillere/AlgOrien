@@ -7,17 +7,17 @@ __all__ = ["formatage", "find_orientation", "question_catégories", "question_me
 
 def formatage(data:list) -> dict:
     categories = [int(data[i].split(" ")[0].split("#")[1]) for i in range(0, 10)]
-    metiers = [int(data[i].split(" ")[0].split("#")[1]) for i in range(10, 20)]
-    re_data = {"Categories_metiers":categories, "Metiers":metiers}
+    metiers = [int(data[i].split(" ")[0].split("#")[1]) for i in range(10, 30)]
+    re_data = {"Profils_types_categories":categories, "Profils_types_metiers":metiers}
     return re_data
 
 def find_orientation(user_data:list, database:str) -> str:
     exe_data = formatage(user_data)
     tables = list(exe_data.keys())
 
-    ID_Categories_metiers = KnnOrien.Algo_knn_orien(exe_data["Categories_metiers"], database, tables[0])
-    ID_Metier = KnnOrien.Algo_knn_orien(exe_data["Categories_metiers"], database, tables[1], ["ID_Categories_metiers", ID_Categories_metiers])
-
+    ID_Categories_metiers = KnnOrien.Algo_knn_orien(exe_data["Profils_types_categories"], database, tables[0], 10)
+    ID_Metier = KnnOrien.Algo_knn_orien(exe_data["Profils_types_metiers"], database, tables[1], 20, ["ID_Categories_metiers", ID_Categories_metiers])
+    
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
         requete = "select Description from Descriptions WHERE ID_Metier = ?"

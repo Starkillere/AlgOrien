@@ -78,7 +78,6 @@ if __name__ == "__main__":
     database = "../database.db"
     PROTOCOL = "HTTP"
 
-
     #Secteurs
     URL1 = "https://www.cidj.com/metiers/metiers-par-secteur"
     secteurs = []
@@ -309,3 +308,22 @@ if __name__ == "__main__":
     print(categories)
     print("\n\n")
     print(metier)
+
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        requeste = "select * from Metiers"
+        cursor.execute(requeste)
+
+        n_data =  cursor.fetchall()
+        requeste = "select * from Profils_types_metiers"
+        cursor.execute(requeste)
+        nh_dat = cursor.fetchall()
+        ID_metier = [n_data[i][0] for i in range(len(n_data))]
+        
+        length = len(nh_dat)
+        
+        for i in range(length):
+            requete = "UPDATE Profils_types_metiers SET ID_Categories_metiers = ?  WHERE ID_Metier = ?"
+            var = n_data[ID_metier.index(nh_dat[i][1])][2]
+            cursor.execute(requete, [(var), (nh_dat[i][1])])
+        conn.commit()
