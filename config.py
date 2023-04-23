@@ -8,4 +8,4 @@ if os.environ.get('DATABASE_URL') is None:
     basedir = os.path.abspath(os.path.dirname(__file__))
     DATABASE_URI = os.path.join(basedir, 'database.db')
 else:
-    pass
+    DATABASE_URI = os.environ['DATABASE_URL']
