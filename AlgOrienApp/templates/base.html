@@ -15,9 +15,9 @@
         <header>
             <nav class="navbar">
                 <a href="/" ><img src="/static/images/logo.png" alt="logo" class="logo"></a>
-                    <ul>
-                        <li class="active" ><a href="/" >Menu</a></li>
-                        <li class="active" ><a href="https://github.com/Starkillere/AlgOrien" target="_blank">À propos</a></li>
+                    <ul class="nav-links">
+                        <li class="active"><a href="/" >Menu</a></li>
+                        <li class="active"><a href="https://github.com/Starkillere/AlgOrien" target="_blank">À propos</a></li>
                     </ul>
                     <img src="/static/images/hambuger-button.png" alt="" class="humber">
             </nav>
@@ -40,4 +40,12 @@
 
         </div>
     </body>
+    <script>
+        const menuHamburger = document.querySelector(".humber")
+        const navLinks = document.querySelector(".nav-links")
+        
+        menuHamburger.addEventListener('click',()=>{
+        navLinks.classList.toggle('mobile-menu')
+        })
+    </script>
 </html>

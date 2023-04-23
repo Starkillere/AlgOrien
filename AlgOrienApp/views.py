@@ -21,6 +21,6 @@ def questionnaire():
     if request.method == "POST":
         all_data = [request.form[index] for index in list(request.form)]
         description = data.find_orientation(all_data, database)
-        return render_template("resulta.html", description=description)
+        return render_template("resulta.html", corp=description, bold=["Description métier", "Exemples de formations :", "Salaires", "Evolutions de carrière"])
     else:
         return render_template("questionnaire.html", question_categorie=data.question_catégories, question_metier=data.question_metier)

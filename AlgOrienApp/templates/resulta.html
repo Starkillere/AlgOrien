@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 {% block navlinks %}
 <div class="resulta">
-    <p>{{description}}</p>
+    <div class="affiche-box">
+        {% for text in corp %}
+            {% if text == corp[0] %}
+                <br><h1><span>{{text[0]}},</span>{{text[1]}}</h1>
+            {% elif text in bold %}
+                <br><h2>{{text}}</h2>
+            {% elif text.startswith("Études / Formation pour") %}
+                <br><h2>{{text}}</h2>
+            {% else %}
+                <br><p>{{text}}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script>
+    const jsConfetti = new JSConfetti()
+    jsConfetti.addConfetti()
+</script>
 {% endblock %}

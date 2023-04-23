@@ -18,7 +18,7 @@ function enleverActiveImages() {
 
 suivant.addEventListener('click', function() {
     etape++;
-    if(etape === nbr__img) {
+    if(etape === nbr__img-1) {
         input.style.display = "none";
         input2.style.display = "block"
         

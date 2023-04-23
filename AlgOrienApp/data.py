@@ -24,7 +24,18 @@ def find_orientation(user_data:list, database:str) -> str:
         cursor.execute(requete, [(ID_Metier)])
 
         description = cursor.fetchone()
-    return description
+        description = "".join(list(description)).split("\n")
+        the_description = []
+        for i in range(len(description)):
+            if description[i] !=  '':
+                the_description.append(description[i])
+
+        del the_description[-1]
+        del the_description[-1]
+
+        the_description[0] = the_description[0].split(",")
+
+    return the_description
 
 
 question_catégories = {('Q#0', 'Quel type de travail souhaitez-vous faire ?'): [['R#0 Q#0', 'Un travail manuel'], ['R#1 Q#0', 'Un travail de bureau'], ['R#2 Q#0', 'Un travail créatif'], ['R#3 Q#0', 'Un travail technologique']], ('Q#1', "Quel est votre niveau d'éducation ?"): [['R#0 Q#1', "Diplôme d'études secondaires"], ['R#1 Q#1', 'Diplôme universitaire'], ['R#2 Q#1', "Certificat d'études spécialisées"], ['R#3 Q#1', 'Aucun diplôme']], ('Q#2', 'Quel type de responsabilité souhaitez-vous avoir ?'): [['R#0 Q#2', 'Des responsabilités importantes'], ['R#1 Q#2', 'Des responsabilités limitées'], ['R#2 Q#2', 'Aucune responsabilité'], ['R#3 Q#2', 'Des responsabilités occasionnelles']], ('Q#3', "Quelle est la taille de l'entreprise qui vous intéresse ?"): [['R#0 Q#3', 'Grande entreprise'], ['R#1 Q#3', 'Petite entreprise'], ['R#2 Q#3', 'Entreprise individuelle'], ['R#3 Q#3', 'Plusieurs entreprises']], ('Q#4', 'Quel est le cadre de travail qui vous intéresse ?'): [['R#0 Q#4', 'En équipe'], ['R#1 Q#4', 'Seul'], ['R#2 Q#4', 'En ligne'], ['R#3 Q#4', 'En personne']], ('Q#5', 'Quel type de salaire espérez-vous ?'): [['R#0 Q#5', 'Un salaire régulier'], ['R#1 Q#5', 'Un salaire à commission'], ['R#2 Q#5', "Un salaire à l'heure"], ['R#3 Q#5', 'Un salaire fixe']], ('Q#6', "Quel type d'environnement de travail vous intéresse ?"): [['R#0 Q#6', 'Environnement dynamique'], ['R#1 Q#6', 'Environnement calme'], ['R#2 Q#6', 'Environnement stimulant'], ['R#3 Q#6', 'Environnement flexible']], ('Q#7', 'Quel type de bénéfices supplémentaires recherchez-vous ?'): [['R#0 Q#7', 'Des vacances payées'], ['R#1 Q#7', 'Des primes de rendement'], ['R#2 Q#7', 'Des avantages sociaux'], ['R#3 Q#7', "Des options d'achat d'actions"]], ('Q#8', 'Quel est le type de carrière que vous souhaitez ?'): [['R#0 Q#8', 'Une carrière ascendante'], ['R#1 Q#8', 'Une carrière stable'], ['R#2 Q#8', 'Une carrière variée'], ['R#3 Q#8', 'Une carrière à long terme']], ('Q#9', 'Quel type de secteur souhaitez-vous rejoindre ?'): [['R#0 Q#9', 'Secteur public'], ['R#1 Q#9', 'Secteur privé'], ['R#2 Q#9', 'Secteur humanitaire'], ['R#3 Q#9', 'Secteur entrepreneurial']]}

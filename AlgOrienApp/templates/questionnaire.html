@@ -8,8 +8,8 @@
                     <div class="show">
                         <br><h2>{{question[1]}}</h2><br>
                             {% for reponse in reponses %}
-                                <br><input type="radio" id="{{reponse[0]}}" name="{{question[0]}}" value="{{reponse[0]}}">
-                                <label for="{{reponse[0]}}">{{reponse[1]}}</label><br>
+                                <br><input type="radio" id="{{reponse[0]}}" name="{{question[0]}}" value="{{reponse[0]}}" class="inpo" onclick="checkCheckboxes()">
+                                <label for="{{reponse[0]}}"><span>{{reponse[1]}}</span></label><br>
                             {% endfor %}
                     </div>
                 {% endfor %}
@@ -17,16 +17,33 @@
                     <div class="show">
                         <br><h2>{{question[1]}}</h2><br>
                             {% for reponse in reponses %}
-                                <br><input type="radio" id="{{reponse[0]}}" name="{{question[0]}}" value="{{reponse[0]}}">
-                                <label for="{{reponse[0]}}">{{reponse[1]}}</label><br>
+                                <br><input type="radio" id="{{reponse[0]}}" name="{{question[0]}}" value="{{reponse[0]}}" class="inpo" onclick="checkCheckboxes()">
+                                <label for="{{reponse[0]}}"><span>{{reponse[1]}}</span></label><br>
                             {% endfor %}
                     </div>        
                 {% endfor %}
-                <br><input id="but" class="but" type="button" value="Suivant"><br>
+                <div class="show">
+                    <br><img src="/static/images/correct.png" alt="" class="gtyuD4"><br>
+                </div> 
+                <br><input id="but" class="but" type="button" value="Suivant" onclick="desactiv()"><br>
                 <br><input id="buto" class="buto" type="submit" value="Envoyer"><br>
             </div>
         </form>
     </div>
 </div>
 <script src="/static/js/slide.js"></script>
+<script>
+    function checkCheckboxes() {
+        const checkboxes = document.querySelectorAll(".active .inpo");
+        console.log(Array.from(checkboxes).some((checkbox) => checkbox.checked));
+        if (Array.from(checkboxes).some((checkbox) => checkbox.checked))
+        {
+            document.getElementById("but").style.display = "block";
+        }
+    }
+
+    function desactiv() {
+        document.getElementById("but").style.display = "none";
+    }
+</script>
 {% endblock %}
