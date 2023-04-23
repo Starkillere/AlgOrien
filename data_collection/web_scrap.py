@@ -2,8 +2,6 @@ import requests
 import unidecode
 import random
 import data
-import time
-import os
 import sqlite3
 from bs4 import BeautifulSoup
 

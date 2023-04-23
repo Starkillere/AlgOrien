@@ -1,9 +1,4 @@
 # -*- coding:utf-8 -*-
-
-class UserData:
-    def __init__(self) -> None:
-        pass
-
 question_catégories = {
         "1. Quel type de travail souhaitez-vous faire ?":
         ["a) Un travail manuel",
